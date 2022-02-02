@@ -3,6 +3,7 @@ public:
     bool isPalindrome(int x) {
          long long int n=x;
         long long int s=0;
+        int k;
         
         if(x<0)
             return false;
