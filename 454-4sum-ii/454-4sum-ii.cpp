@@ -5,6 +5,7 @@ public:
         unordered_map <int,int> mp;
         int n = nums1.size();
         int cnt = 0;
+        
         for(int i=0; i<n ;i++)
         {
             for(int j=0; j<n; j++)
@@ -17,7 +18,7 @@ public:
         {
             for(int j=0; j<n; j++)
             {
-                if(mp.find(-(nums3[i]+nums4[j])) != mp.end())
+                
                     cnt+= mp[-(nums3[i]+nums4[j])];
             }
         }
