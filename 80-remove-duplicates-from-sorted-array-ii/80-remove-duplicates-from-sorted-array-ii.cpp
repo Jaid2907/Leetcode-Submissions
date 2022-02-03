@@ -7,6 +7,7 @@ public:
         
         if(n<=2)
             return n;
+        int k;
     
        int slow = 2,fast  = 2;
         
