@@ -50,7 +50,7 @@ public:
     }
     vector<int> addToArrayForm(vector<int>& num, int k) {
         string a = "";
-        
+        int l;
         for(auto& it: num)
             a.push_back(char(it+48));
         string b = to_string(k);
