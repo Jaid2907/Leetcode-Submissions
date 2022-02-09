@@ -3,28 +3,18 @@ public:
     int findPairs(vector<int>& nums, int k) {
         int n = nums.size();
         int cnt = 0;
-        set<pair<int,int>> s;
-        for(int i=0; i<n; i++)
+        unordered_map<int,int> mp;
+       
+        for(auto& it: nums)
+            mp[it]++;
+        
+        for(auto& it: mp)
         {
-            for(int j=i+1; j<n; j++)
-            {
-                if(abs(nums[j]-nums[i])==k)
-                {
-                    cnt++;
-                    if(nums[i]<nums[j])
-                    {
-                        s.insert({nums[i],nums[j]});
-                    }
-                    else
-                    {
-                        s.insert({nums[j],nums[i]});
-                    }
-                    
-                }
-            }
+            if((!k && it.second>1) || (k && mp.find(it.first+k)!=mp.end()))
+                cnt++;
         }
         
-        return s.size();
+        return cnt;
         
     }
 };
