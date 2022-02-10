@@ -15,8 +15,7 @@ public:
                 return true;
             if(mp.find(sum) == mp.end())
             mp[sum] = i;
-            if(i>0 && nums[i] == 0 && nums[i-1] == 0)
-                return true;
+
             
         }
         
