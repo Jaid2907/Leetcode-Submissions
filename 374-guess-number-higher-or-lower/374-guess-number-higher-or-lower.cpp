@@ -13,7 +13,7 @@ public:
         int low = 1;
         int high = n;
         int mid;
-        int b;
+        
         while(low<=high)
         {
             mid = low + (high-low)/2;
