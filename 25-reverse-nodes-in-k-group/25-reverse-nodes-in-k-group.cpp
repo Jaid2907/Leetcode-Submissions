@@ -37,6 +37,7 @@ public:
         int cnt = 1;
         ListNode* new_head, *prev = NULL;
         int flag = 0;
+        int c;
         
         while(p)
         {
