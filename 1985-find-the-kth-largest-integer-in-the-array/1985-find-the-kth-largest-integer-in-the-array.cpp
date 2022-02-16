@@ -21,7 +21,7 @@ public:
     }
     string kthLargestNumber(vector<string>& nums, int k) {
         sort(nums.begin(),nums.end(),compare);
-        
+        int a;
         int n = nums.size();
         return nums[n-k];
     }
