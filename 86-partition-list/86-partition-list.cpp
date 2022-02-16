@@ -11,33 +11,36 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        //Space O(n) and Time O(n)
-        vector<int> less,greater;
+        ListNode* less = new ListNode();
         
+        ListNode* greater = new ListNode();
+        ListNode* q = less;
+        ListNode* r = greater;
         ListNode* p = head;
         
         while(p)
         {
             if(p->val<x)
-                less.push_back(p->val);
+            {
+                ListNode* t = p;
+                p = p->next;
+                q->next = t;
+                t->next = NULL;
+                q = q->next;
+                
+            }
             else
-                greater.push_back(p->val);
-            p = p->next;
+            {
+                ListNode* t = p;
+                 p = p->next;
+                r->next = t;
+                t->next = NULL;
+                r = r->next;
+            }
         }
-        p = head;
-        int i = 0;
-        int n = less.size();
-        while(i<n)
-        {
-            p->val = less[i++];
-            p = p->next;
-        }
-        i = 0;
-        while(p)
-        {
-            p->val = greater[i++];
-            p = p->next;
-        }
-        return head;
+        ListNode* t = greater;
+        q->next = greater->next;
+        delete t;
+        return less->next;
     }
 };
