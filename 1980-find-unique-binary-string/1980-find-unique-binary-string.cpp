@@ -10,6 +10,7 @@ public:
             
             return;
         }
+        
         if(s.size() == n)
             return ;
         
