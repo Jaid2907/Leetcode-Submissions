@@ -11,15 +11,20 @@
 class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
-        vector<int> v;
+       
         ListNode* p = head->next;
+        ListNode* q = head;
+        ListNode* prev;
         int sum = 0;
         while(p)
         {
             
             if(p->val == 0)
             {
-                v.push_back(sum);
+                
+                q->val = sum;
+                prev = q;
+                q=q->next;
                 sum = 0;
             }
             else
@@ -30,15 +35,7 @@ public:
             p = p->next;
         }
         
-        p = head;
-        ListNode* prev;
-        int k = 0;
-        while(k<v.size())
-        {
-            p->val = v[k++];
-            prev = p;
-            p = p->next;
-        }
+        p = q;
         
         while(p)
         {
