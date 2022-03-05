@@ -1,34 +1,23 @@
 class Solution {
 public:
-    bool isNotBipartite(int curr,vector<vector<int>>& graph, vector<int>& visited, vector<int>& color )
+    bool isNotBipartite(int parent, int curr, vector<vector<int>>& graph, vector<int>& visited, vector<int>& color )
     {
         visited[curr] = 1;
-        queue<int> q;
-        q.push(curr);
-        color[curr] = 1;
-        
-        while(!q.empty())
+        color[curr] = !color[parent];
+        bool a = false;
+        for(auto it: graph[curr])
         {
-            auto t = q.front();
-            q.pop();
-            
-            for(auto it: graph[t])
+            if(!visited[it])
             {
-                if(!visited[it])
-                {
-                    color[it] = !color[t];
-                    q.push(it);
-                    visited[it] = 1;
-                }
-                else if(color[it] == color[t])
-                    return true;
-                    
+                a = isNotBipartite(curr, it, graph, visited, color);
+                
             }
-            
-            
+            else if(color[it] == color[curr])
+                return true;
         }
         
-        return false;
+        return a;
+        
     }
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
@@ -40,7 +29,7 @@ public:
         {
             if(!visited[i])
             {
-                if(isNotBipartite(i,graph,visited,color))
+                if(isNotBipartite(n,i,graph,visited,color))
                     return false;
             }
         }
