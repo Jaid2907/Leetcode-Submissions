@@ -7,34 +7,75 @@ class Solution
 {
 	public:
 	//Function to return list containing vertices in Topological order. 
-	void dfs(int curr, vector<int>& visited, vector<int>& ans,vector<int> adj[])
+	void bfs(int curr, vector<int>& visited, vector<int>& ans,vector<int> adj[])
 	{
-	    visited[curr] = 1;
 	    
-	    for(auto it: adj[curr])
+	    queue<int> q;
+	    q.push(curr);
+	    
+	    while(!q.empty())
 	    {
-	        if(!visited[it])
-	        {
-	            dfs(it,visited,ans,adj);
-	        }
+	        int t = q.front();
+	        int size = q.size();
+	        q.pop();
+	        
+	       for(auto &it: adj[t])
+	       {
+	           if(!visited[it])
+	           {    
+	               q.push(it);
+	               visited[it] = 1;
+	               ans.push_back(it);
+	           }
+	           
+	       }
+	       
 	    }
 	    
+	    
 	    ans.push_back(curr);
+	       
+	    visited[curr] = 1;
+	    
 	}
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
 	    vector<int> ans;
 	    vector<int> vis(V,0);
+	    vector<int> indegree (V,0);
+	    queue<int> q;
+	    
 	    for(int i=0; i<V; i++)
 	    {
-	        if(!vis[i])
+	        for(auto &it: adj[i])
 	        {
-	            dfs(i,vis,ans,adj);
+	            indegree[it]++;
 	        }
 	    }
 	    
-	    reverse(ans.begin(),ans.end());
+	    for(int i=0; i<V; i++)
+	    {
+	        if(indegree[i] == 0)
+	        q.push(i);
+	    }
+	    
+	    while(!q.empty())
+	    {
+	        int t = q.front();
+	        q.pop();
+	        
+	        for(auto &it : adj[t])
+	        {
+	            indegree[it]--;
+	            if(indegree[it] == 0)
+	            q.push(it);
+	        }
+	        
+	        ans.push_back(t);
+	        
+	    }
+	    
 	    return ans;
 	}
 };
