@@ -4,13 +4,13 @@ public:
          
             int n = grid.size();
             queue<vector<int>> q;
-            vector<vector<int>> visited(n, vector<int>(n,0));
+            
         
             if(grid[0][0] == 1)
                 return -1;
         
             q.push({0,0,1});
-            visited[0][0] = 1;
+            grid[0][0] = 1;
         
             vector<int> row = {0,1,-1,0,+1,-1,+1,-1};
             vector<int> col = {1,0,0,-1,+1,-1,-1,+1};
@@ -34,9 +34,10 @@ public:
                         
                         if(curr_row + i >=0 && curr_row + i<n && curr_col +j>=0 && curr_col + j<n)
                         {
-                            if(grid[curr_row+i][curr_col+j] == 0 && !visited[curr_row+i][curr_col+j]){
-                                visited[curr_row+i][curr_col+j] = 1;
+                            if(grid[curr_row+i][curr_col+j] == 0){
+                                
                                 q.push({curr_row + i, curr_col + j, dist+1});
+                                grid[curr_row+i][curr_col+j] = 1;
                                 cnt++;
                                 
                                  
