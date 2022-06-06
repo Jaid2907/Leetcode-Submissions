@@ -1,46 +1,51 @@
 class Solution {
 public:
-    int helper(int i, int j, vector<vector<int>>& visited, vector<vector<int>>& grid)
-    {
-        if(i<0 || j<0 || i>= grid.size() || j>=grid[0].size())
-            return 0;
-        if(visited[i][j] == 1)
-            return 0;
-        
+    int bfs (int i, int j, vector<vector<int>>& visited, vector<vector<int>>& grid){
+        vector<int> row = {0,0,1,-1};
+        vector<int> col = {1,-1,0,0};
+        queue<pair<int,int>> q;
+        q.push({i,j});
         visited[i][j] = 1;
-        
-        if(grid[i][j] == 0)
-            return 0;
-        
-        int a = helper(i-1,j,visited,grid);
-        int b = helper(i+1,j,visited,grid);
-        int c = helper(i,j-1,visited,grid);
-        int d = helper(i,j+1,visited,grid);
-        
-        
-        return a+b+c+d+1;
-    }
-    int maxAreaOfIsland(vector<vector<int>>& grid) {
-        
         int m = grid.size();
         int n = grid[0].size();
-        int ans = INT_MIN;
+        int cnt = 1;
+        
+        while(!q.empty()){
+            auto node = q.front();
+            q.pop();
+            
+            for(int i=0; i<4; i++){
+                int r = node.first + row[i];
+                int c = node.second + col[i];
+                
+                if(r<m && r>=0 && c<n && c>=0){
+                    if(!visited[r][c]){
+                        if(grid[r][c]){
+                            visited[r][c] = 1;
+                            q.push({r,c});
+                            cnt++;
+                        }
+                    }
+                }
+            }
+        }
+        return cnt;
+    }
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int ans = 0;
+        int m = grid.size();
+        int n = grid[0].size();
         vector<vector<int>> visited(m,vector<int>(n,0));
         
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                if(grid[i][j] == 1 && !visited[i][j])
-                {
-                    
-                    ans = max(ans,helper(i,j,visited,grid));
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(!visited[i][j] && grid[i][j]){
+                    ans = max(ans,bfs(i,j,visited,grid));
                 }
             }
         }
         
-        if(ans == INT_MIN)
-            return 0;
         return ans;
+        
     }
 };
