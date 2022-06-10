@@ -10,26 +10,20 @@ public:
         vector<int> col = {1,-1,0,0};
         
         queue<pair<int,int>> q;
-        vector<vector<int>> ans(m, vector<int>(n,INT_MAX - 1e5));
-        
-
-        
-        
-        for(int i=0; i<m; i++){
-            for(int j=0; j<n; j++){
-                if((i==0 || i==m-1 || j==0 || j==n-1) && maze[i][j] == '.'){
-                    if(!(i == a && j == b)){
-                        ans[i][j] = 0;
-                        q.push({i,j});
-                    }
-                    
-                }
-            }
-        }
+        q.push({a,b});
+        maze[a][b] = '+';
+        int dist = 0;
+    
         
        
         while(!q.empty()){
             
+            int size = q.size();
+            if(size)
+                dist++;
+            
+            while(size--){
+                
             auto [i,j] = q.front();
             q.pop();
             
@@ -37,19 +31,21 @@ public:
                 int r = i + row[k];
                 int c = j + col[k];
                 
-                if(r>=0 && r<m && c>=0 && c<n && maze[r][c] != '+'){
+                if(r>=0 && r<m && c>=0 && c<n && maze[r][c] == '.'){
                     
-                    if(ans[i][j]+1<ans[r][c]){
-                        ans[r][c] = ans[i][j] + 1;
-                        q.push({r,c});
-                    }
+                    q.push({r,c});
+                    maze[r][c] = '+';
+                    
+                    if(r==0 || r==m-1 || c==0 || c==n-1)
+                        return dist;
                 }
-            }
+            }    
+        }
+            
         }
         
 
-        if(ans[a][b] == INT_MAX-1e5)
-            return -1;
-        return ans[a][b];
+        
+        return -1;
     }
 };
