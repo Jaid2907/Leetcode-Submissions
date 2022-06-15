@@ -5,30 +5,18 @@ public:
     }
     int longestStrChain(vector<string>& words) {
      
-        int n = words.size();
-        unordered_map <string, int> dp;
-        
-        sort(words.begin(),words.end(),compare);
-        for(auto it: words){
-            cout<<it<<" ";
-        }
-        cout<<endl;
+       sort(words.begin(), words.end(), compare);
+        unordered_map<string, int> dp;
         int res = 0;
-        
-        for(auto it: words){
-            
-            for(int i=0; i<it.size(); i++){
-                string prev = it.substr(0,i) + it.substr(i+1);
-                dp[it] = max(dp[it], dp.find(prev) == dp.end()?0:1+dp[prev]);
+        for (string w : words) {
+            for (int i = 0; i < w.length(); i++) {
+                string pre = w.substr(0, i) + w.substr(i + 1);
+                dp[w] = max(dp[w], dp.find(pre) == dp.end() ? 1 : dp[pre] + 1);
             }
-            res = max(res,dp[it]);
+            res = max(res, dp[w]);
         }
         
-        
-        return res+1;
-        
-        
-       
+       return res;
         
     }
 };
