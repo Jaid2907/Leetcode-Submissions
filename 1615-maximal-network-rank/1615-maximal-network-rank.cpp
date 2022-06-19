@@ -18,8 +18,10 @@ public:
     int maximalNetworkRank(int n, vector<vector<int>>& roads) {
      
         Graph g(n);
-        
+        vector<vector<int>> adj(n,vector<int>(n,0));
         for(auto it: roads){
+            adj[it[0]][it[1]] = 1;
+            adj[it[1]][it[0]] = 1;
             g.addEdge(it[0],it[1]);
         }
         
@@ -32,7 +34,7 @@ public:
                 int a = g.l[i].size();
                 int b = g.l[j].size();
                 
-                if(find(g.l[i].begin(), g.l[i].end(), j) != g.l[i].end())
+                if(adj[i][j])
                     a--;
                 
                 ans = max(ans,a+b);
