@@ -1,16 +1,23 @@
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
-        unordered_map<int,int> mp;
+       //Bit manpulation solution
         
+        vector<int> ans = {0,0};
+        unsigned int xor_res = 0;
         for(auto it: nums){
-            mp[it]++;
+            xor_res ^= it;
         }
         
-        vector<int> ans;
-        for(auto it: mp){
-            if(it.second == 1)
-                ans.push_back(it.first);
+        unsigned int set_bit = xor_res & -(xor_res);
+        
+        for(auto it: nums){
+            
+            if((it & set_bit) == 0){
+                ans[0] ^= it;
+            }
+            else
+                ans[1] ^= it;
         }
         
         return ans;
