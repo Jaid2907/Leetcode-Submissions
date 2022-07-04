@@ -1,24 +1,21 @@
 class Solution {
 public:
-    int helper (int i, int last_picked_index, vector<int>& arr, int n,vector<vector<int>>& dp){
-    if(i == n)
-        return 0;
     
-    if(dp[i][last_picked_index] != -1){
-        return dp[i][last_picked_index];
-    }
-    
-    if( last_picked_index == n || arr[i] > arr[last_picked_index]){
-        return dp[i][last_picked_index] =  max(1 + helper(i+1,i,arr,n,dp), helper(i+1,last_picked_index,arr,n,dp));
-    }
-    else
-        return dp[i][last_picked_index] =  helper(i+1,last_picked_index,arr,n,dp);
-}
-    int lengthOfLIS(vector<int>& nums) {
+
+    int lengthOfLIS(vector<int>& arr) {
         
-        int n = nums.size();
-        vector<vector<int>> dp(n+1, vector<int> (n+1,-1));
-        return helper(0,n,nums,n,dp);
+        int n = arr.size();
+         vector<int> dp (n,1);
+    
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+            if(arr[i]>arr[j] && dp[j]+1>dp[i]){
+                dp[i] = 1 + dp[j];
+            }
+        }
+    }
+    
+    return *max_element(dp.begin(),dp.end());
     }
     
 };
