@@ -6,16 +6,16 @@ public:
         int n = height.size();
         vector<int> left (n,-1);
         vector<int> right(n,-1);
-        int maxi = INT_MIN;
+        int maxi_left = INT_MIN;
+        int maxi_right = INT_MIN;
         
-        for(int i = 0; i<n; i++){
-            maxi = max(maxi,height[i]);
-            left[i] = maxi;
-        }
-        maxi = INT_MIN;
-        for(int i = n-1; i>=0; i--){
-            maxi = max(maxi, height[i]);
-            right[i] = maxi;
+        for(int i = 0, j= n-1; i<n; i++, j--){
+            
+            maxi_left = max(maxi_left,height[i]);
+            left[i] = maxi_left;
+            
+            maxi_right = max(maxi_right,height[j]);
+            right[j] = maxi_right;
         }
         
         
