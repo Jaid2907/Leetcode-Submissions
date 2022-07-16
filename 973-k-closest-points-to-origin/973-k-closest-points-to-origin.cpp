@@ -12,7 +12,7 @@ public:
         
         for(int i=0; i<points.size(); i++){
             
-            float dist = sqrt(points[i][0]*points[i][0] + points[i][1]*points[i][1]);
+            float dist = points[i][0]*points[i][0] + points[i][1]*points[i][1];
             float x = points[i][0];
             float y = points[i][1];
             
