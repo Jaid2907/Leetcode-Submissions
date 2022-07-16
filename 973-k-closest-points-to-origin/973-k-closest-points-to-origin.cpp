@@ -1,7 +1,7 @@
 class compare {
     public:
   bool operator ()(vector<float>& a, vector<float>& b){
-      return a[0]>b[0];
+      return a[0]<b[0];
   }  
 };
 class Solution {
@@ -16,7 +16,16 @@ public:
             float x = points[i][0];
             float y = points[i][1];
             
-            pq.push({dist,x,y});
+            if(pq.size() == k){
+                
+                if(dist < pq.top()[0]){
+                    pq.pop();
+                    pq.push({dist,x,y});
+                }
+                    
+            }
+            else
+                pq.push({dist,x,y});
         }
         vector<vector<int>> ans;
         
