@@ -1,32 +1,20 @@
-int mod = 1e9+7;
 class Solution {
 public:
-    
-    int helper (int i, int j, int m, int n, int maxMove, vector<vector<vector<int>>>& dp){
-        
-        if(i<0 || i>=m || j<0 || j>=n)
-            return 1;
-        if(maxMove<=0)
-            return 0;
-        
-        if(dp[i][j][maxMove] != -1)
-            return dp[i][j][maxMove];
-        
-        vector<int> dx = {1,-1,0,0};
-        vector<int> dy = {0,0,-1,1};
-        
-        int ans = 0;
-        for(int k = 0; k<4; k++){
-            
-            ans = (ans + helper(i+dx[k],j + dy[k],m,n,maxMove-1,dp))%mod;
-        }
-        
-        return dp[i][j][maxMove] = ans;
-    }
+    int m, n;
+    int memo[50][50][51];
+    int DIR[5] = {0, 1, 0, -1, 0};
     int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
-        
-        vector<vector<vector<int>>> dp (m,vector<vector<int>>(n,vector<int>(maxMove+1,-1)));
-        
-        return helper(startRow, startColumn,m,n,maxMove,dp);
+        this->m = m; this->n = n;
+        memset(memo, -1, sizeof(memo));
+        return dp(startRow, startColumn, maxMove);
+    }
+    int dp(int r, int c, int maxMove) {
+        if (r < 0 || r == m || c < 0 || c == n) return 1; // Out of bound -> Count 1 way
+        if (maxMove == 0) return 0;
+        if (memo[r][c][maxMove] != -1) return memo[r][c][maxMove];
+        int ans = 0;
+        for (int i = 0; i < 4; ++i)
+            ans = (ans + dp(r + DIR[i], c + DIR[i+1], maxMove - 1)) % 1000000007;
+        return memo[r][c][maxMove] = ans;
     }
 };
