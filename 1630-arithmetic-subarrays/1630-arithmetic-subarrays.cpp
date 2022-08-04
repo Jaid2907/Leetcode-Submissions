@@ -10,20 +10,28 @@ public:
             
             int start = l[i];
             int end = r[i];
+           
             int flag = 0;
+            int maxi = INT_MIN;
+            int mini = INT_MAX;
             
-            vector<int> temp;
+            unordered_map <int,int> mp;
             
             for(int j = start; j<=end; j++){
-             temp.push_back(nums[j]);
+                mp[nums[j]]++;
+                maxi = max(maxi, nums[j]);
+                mini = min(mini, nums[j]);
             }
             
-            sort(temp.begin(), temp.end());
+            int interval = (maxi-mini)/(end-start);
             
-            int d = temp[1]-temp[0];
+            if((maxi - mini) %(end-start) != 0){
+                continue;
+            }
             
-            for(int i = 1; i<temp.size(); i++){
-                if((temp[i] - temp[i-1]) != d){
+            
+            for(int j = 0; j<=(end-start); j++){
+                if(mp.find(mini + interval*j) == mp.end()){
                     flag = 1;
                     break;
                 }
