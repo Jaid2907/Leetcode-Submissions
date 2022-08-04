@@ -1,5 +1,21 @@
 class Solution {
 public:
+    void dfs (int i, int j, vector<vector<int>>& visited, vector<vector<char>>& grid, int m, int n){
+        
+        visited[i][j] = 1;
+        
+        if( i+1 < m && !visited[i+1][j] && grid[i+1][j] == '1')
+            dfs(i+1,j,visited,grid,m,n);
+        
+        if(i-1>=0 && !visited[i-1][j] && grid[i-1][j] == '1')
+            dfs(i-1,j,visited,grid,m,n);
+        
+        if(j+1<n && !visited[i][j+1] && grid[i][j+1] == '1')
+            dfs(i,j+1,visited,grid,m,n);
+        
+        if(j-1>=0 && !visited[i][j-1] && grid[i][j-1] == '1')
+            dfs(i,j-1,visited,grid,m,n);
+    }
     void bfs(int i, int j, vector<vector<int>>& visited, vector<vector<char>>& grid){
         int m = grid.size();
         int n = grid[0].size();
@@ -38,7 +54,7 @@ public:
                 
                 if(!visited[i][j] && grid[i][j] == '1')
                 {
-                    bfs(i,j,visited,grid);
+                    dfs(i,j,visited,grid,m,n);
                     cnt++;
                 }
             }
