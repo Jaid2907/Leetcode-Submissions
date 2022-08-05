@@ -1,60 +1,69 @@
 class Node{
     public:
-    vector<Node*> v;
+    vector<Node*> vec;
     bool flag = false;
+     Node(){
+         vec.resize(26);
+     }
     
-    Node(){
-        v.resize(26);
-    }
-
 };
-
 class Trie {
 public:
     Node* root;
     
     Trie() {
-     root = new Node();   
+        root = new Node();
     }
     
     void insert(string word) {
-        Node *p = root;
-        for(int i=0; i<word.size(); i++){
-            if(p->v[word[i]-'a'] == NULL){
-                p->v[word[i]-'a'] = new Node();
-                p = p->v[word[i]-'a'];
+        int n = word.size();
+        Node* node = root;
+        
+        for(int i = 0; i<n; i++){
+            
+            if(node->vec[word[i]-97] == NULL){
+                Node* temp = new Node();
+                node->vec[word[i]-97] = temp;
+                node = temp;
             }
-            else
-                p = p->v[word[i]-'a'];
+            else{
+                node = node->vec[word[i]-97];
+            }
+           
         }
-        p->flag = true;
+        
+        node->flag = true;
+        
     }
     
     bool search(string word) {
-        Node* p = root;
-        for(int i=0; i<word.size(); i++){
-            if(p->v[word[i]-'a'] != NULL){
-                p = p->v[word[i]-'a'];
-            }
-            else
+        
+        Node* node = root;
+        int n = word.size();
+        
+        for(int i = 0; i<n; i++){
+            
+            if(node->vec[word[i]-97] == NULL){
                 return false;
+            }
+            node = node->vec[word[i]-97];
         }
-        if(p->flag)
-            return true;
-        return false;
+        
+        return node->flag == true;
+        
     }
     
     bool startsWith(string prefix) {
-        Node* p = root;
         
-        for(int i=0; i<prefix.size(); i++){
-            if(p->v[prefix[i]-'a'] != NULL){
-                p = p->v[prefix[i]-'a'];
-            }
-            else
+        Node* node = root;
+        int n =  prefix.size();
+        
+        for(int i = 0; i<n; i++){
+            if(node->vec[prefix[i]-97] == NULL){
                 return false;
+            }
+            node = node->vec[prefix[i]-97];
         }
-        
         return true;
     }
 };
