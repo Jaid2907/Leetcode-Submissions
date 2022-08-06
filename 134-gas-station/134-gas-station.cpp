@@ -1,46 +1,25 @@
 class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-        
-        
-        int n = gas.size();
-        int index=0;
-        int fuel = 0;
-        int tot_gas= 0, tot_cost = 0;
-        
-        for(int i = 0; i<n;i++)
-        {
-            tot_gas+=gas[i];
-            tot_cost+=cost[i];
-        }
-        
-        if(tot_cost>tot_gas)
+        int sum_gas = accumulate(gas.begin(), gas.end(),0);
+        int sum_cost = accumulate(cost.begin(), cost.end(), 0);
+        if(sum_cost > sum_gas)
             return -1;
+        int gas_rem = 0;
+        int n = gas.size();
+        int ans = 0;
         
-        for(int i = 0; i<n;i++)
-        {
+        
+        for(int i = 0; i<n; i++){
             
-            fuel  = fuel  + gas[i]-cost[i];
+            gas_rem += gas[i]-cost[i];
             
-            if(fuel<0)
-            {
-                fuel = 0;
-                index = i+1;
+            if(gas_rem <0){
+                gas_rem = 0;
+                ans = i+1;
             }
+            
         }
-        
-        return index;
-        
-            
-            
-        
-        
-        
-       
-        
-          
-        
-      
-     
+        return ans;
     }
 };
