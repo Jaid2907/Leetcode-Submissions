@@ -11,7 +11,7 @@ public:
         
         return true;
     }
-    void helper (int i,int n, string& s, vector<vector<string>>& ans, vector<string>& ds){
+    void helper (int i,int n, string& s, vector<vector<string>>& ans, vector<string>& ds, vector<vector<bool>>& dp){
         if(i == n){
             ans.push_back(ds);
             return ;
@@ -19,9 +19,10 @@ public:
         
         for(int j = i; j<n; j++){
             string str = s.substr(i,j-i+1);
-            if(isPalindrome(str)){
+            if(s[i] == s[j] && (j-i<=2 || dp[i+1][j-1])){
+                dp[i][j] = true;
                 ds.push_back(str);
-                helper(j+1,n,s,ans,ds);
+                helper(j+1,n,s,ans,ds,dp);
                 ds.pop_back();
             }
         }
@@ -30,8 +31,8 @@ public:
         vector<vector<string>> ans;
         vector<string> ds;
         int n = s.size();
-        
-        helper(0,n,s,ans,ds);
+        vector<vector<bool>> dp(n,vector<bool>(n,false));
+        helper(0,n,s,ans,ds,dp);
         
         return ans;
     }
