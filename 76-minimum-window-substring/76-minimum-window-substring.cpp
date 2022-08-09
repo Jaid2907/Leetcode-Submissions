@@ -17,14 +17,7 @@ public:
             freq_s[s[i]]++;
             int flag = 0;
             
-            while(j<=i){
-                if(freq_s[s[j]] > freq_p[s[j]]){
-                    freq_s[s[j]]--;
-                    j++;
-                }
-                else
-                 break;
-            }
+            
             
             for(int i = 0; i<=255; i++){
                 if(freq_s[i]< freq_p[i]){
@@ -34,6 +27,14 @@ public:
             }
             
             if(flag == 0){
+                while(j<=i){
+                if(freq_s[s[j]] > freq_p[s[j]]){
+                    freq_s[s[j]]--;
+                    j++;
+                }
+                else
+                 break;
+            }
                 if(len > i-j+1){
                     start = j;
                     end = i;
