@@ -1,58 +1,47 @@
 class Solution {
 public:
-    int shortestPath (vector<vector<int>>& grid){
-         
-            int n = grid.size();
-            queue<vector<int>> q;
-            
-        
-            if(grid[0][0] == 1)
-                return -1;
-        
-            q.push({0,0,1});
-            grid[0][0] = 1;
-        
-            vector<int> row = {0,1,-1,0,+1,-1,+1,-1};
-            vector<int> col = {1,0,0,-1,+1,-1,-1,+1};
-            int cnt = 1;
-            
-        
-            while (!q.empty()){
-                auto node = q.front();
-                q.pop();
-                
-               
-                int curr_row = node[0];
-                int curr_col = node[1];
-                int dist = node[2];
-                
-                if( curr_row == n-1 && curr_col == n-1)
-                    return dist;
-                
-                for(auto i: row){
-                    for(auto j: col)
-                        
-                        if(curr_row + i >=0 && curr_row + i<n && curr_col +j>=0 && curr_col + j<n)
-                        {
-                            if(grid[curr_row+i][curr_col+j] == 0){
-                                
-                                q.push({curr_row + i, curr_col + j, dist+1});
-                                grid[curr_row+i][curr_col+j] = 1;
-                                cnt++;
-                                
-                                 
-                            }
-                        }
-                }
-                
-            }
-        
-        return -1;
-            
-    }
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         
-        return shortestPath(grid);
         
+        int m = grid.size();
+        int n = grid[0].size();
+        if(grid[0][0] == 1 || grid[m-1][n-1] == 1)
+            return -1;
+        vector<vector<int>> visited(m, vector<int>(n,0));
+        queue<pair<int,int>> q;
+        q.push({0,0});
+        vector<int> row = {1,1,1,0,0,-1,-1,-1};
+        vector<int> col = {-1,0,1,-1,1,1,0,-1};
+        int cnt = 0;
+        visited[0][0] = 1;
+        while(!q.empty()){
+            int size = q.size();
+            cnt++;
+            while(size--){
+                auto node = q.front();
+                q.pop();
+                int x = node.first;
+                int y = node.second;
+                 if(x == m-1 && y == n-1)
+                            return cnt;
+
+            
+                for(int i = 0; i<8; i++){
+                    int r = x + row[i];
+                    int c = y + col[i];
+                    
+                    if(r<m && c<n && r>=0 && c>=0 && grid[r][c] == 0 && !visited[r][c]){
+                        visited[r][c] = 1;
+                        q.push({r,c});
+                        
+                        
+                    }
+                
+                }       
+            }
+            
+            
+        }
+        return -1;
     }
 };
