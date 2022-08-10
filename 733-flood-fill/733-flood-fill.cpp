@@ -1,41 +1,34 @@
 class Solution {
 public:
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        
-        vector<int> row = {0,0,1,-1};
-        vector<int> col = {1,-1,0,0};
-        queue<pair<int,int>> q;
-        q.push({sr,sc});
-        int color = image[sr][sc];
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
         int m = image.size();
         int n = image[0].size();
         
-        vector<vector<int>> visited(m,vector<int>(n,0));
+        vector<vector<int>> visited(m, vector<int>(n,0));
+        vector<int> row = {1,-1,0,0};
+        vector<int> col = {0,0,1,-1};
         
-        image[sr][sc] = newColor;
-        
-       
+        queue<pair<int,int>> q;
+        q.push({sr,sc});
+        visited[sr][sc] = 1;
         
         while(!q.empty()){
             auto node = q.front();
             q.pop();
+            int x = node.first;
+            int y = node.second;
             
             for(int i = 0; i<4; i++){
-                int r = node.first + row[i];
-                int c= node.second + col[i];
+                int r = x + row[i];
+                int c = y + col[i];
                 
-                if(r<m && r>=0 && c<n && c>=0){
-                    if(!visited[r][c]){
-                        if(image[r][c] == color){
-                            image[r][c] = newColor;
-                            q.push({r,c});
-                            visited[r][c] = 1;
-                        }
-                    }
+                if(r<m && c<n && r>=0 && c>=0 && image[r][c] == image[x][y] && !visited[r][c]){
+                    visited[r][c] = 1;
+                    q.push({r,c});
                 }
-                
-                
             }
+            image[x][y] = color;
+                
         }
         
         return image;
