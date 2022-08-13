@@ -30,27 +30,33 @@ public:
         if(n == 2)
             return nums[0] == nums[1];
         
-        vector<bool> dp(n,false);
-        dp[0] = false;
-        dp[1] = nums[0] == nums[1];
-        dp[2] = (nums[2] == nums[1] && dp[1]) || (nums[2]-nums[1] == 1 && nums[1] - nums[0] == 1);
+        // vector<bool> dp(n,false);
+        bool curr_3, curr_2,curr_1;
+        curr_3 = false;
+        curr_2 = nums[0] == nums[1];
+        curr_1 = (nums[2] == nums[1] && curr_2) || (nums[2]-nums[1] == 1 && nums[1] - nums[0] == 1);
         
         
         for(int i = 3; i<n; i++){
+            bool curr = false;
             
             if(i-2 >=0 && nums[i] == nums[i-1]){
-                dp[i] = dp[i] || dp[i-2];
+                curr = curr || curr_2;
                 
                 if(i-3>=0 && nums[i-1] == nums[i-2])
-                    dp[i] = dp[i] || dp[i-3];
+                    curr = curr || curr_3;
             }
             
             if(i-3 >=0 && nums[i]-nums[i-1] == 1 && nums[i-1] - nums[i-2] == 1)
-                dp[i] = dp[i] || dp[i-3];
+                curr = curr || curr_3;
+            
+           curr_3 = curr_2;
+           curr_2 = curr_1;
+           curr_1 = curr;
         }
         
         
-        return dp[n-1];
+        return curr_1;
         
         
     }
