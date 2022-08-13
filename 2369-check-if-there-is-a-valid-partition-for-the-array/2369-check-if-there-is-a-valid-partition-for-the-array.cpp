@@ -25,8 +25,33 @@ public:
     }
     bool validPartition(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp(n,-1);
+        if(n == 1)
+            return false;
+        if(n == 2)
+            return nums[0] == nums[1];
         
-        return helper(0,nums,n,dp);
+        vector<bool> dp(n,false);
+        dp[0] = false;
+        dp[1] = nums[0] == nums[1];
+        dp[2] = (nums[2] == nums[1] && dp[1]) || (nums[2]-nums[1] == 1 && nums[1] - nums[0] == 1);
+        
+        
+        for(int i = 3; i<n; i++){
+            
+            if(i-2 >=0 && nums[i] == nums[i-1]){
+                dp[i] = dp[i] || dp[i-2];
+                
+                if(i-3>=0 && nums[i-1] == nums[i-2])
+                    dp[i] = dp[i] || dp[i-3];
+            }
+            
+            if(i-3 >=0 && nums[i]-nums[i-1] == 1 && nums[i-1] - nums[i-2] == 1)
+                dp[i] = dp[i] || dp[i-3];
+        }
+        
+        
+        return dp[n-1];
+        
+        
     }
 };
