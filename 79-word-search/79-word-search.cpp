@@ -1,17 +1,16 @@
 class Solution {
 public:
-    bool dfs (int i,int j,int k, vector<vector<char>>& board, string &word, int m, int n){
+     vector<int> row = {0,0,1,-1};
+     vector<int> col = {1,-1,0,0};
+    bool dfs (int i,int j,int k, vector<vector<char>>& board, string &word, int& m, int& n){
       
         if(k == word.size())
             return true;
         
-        
-        vector<int> row = {0,0,1,-1};
-        vector<int> col = {1,-1,0,0};
-        
         bool ans = false;
         char a = board[i][j];
         board[i][j] = '*';
+        
         for(int l = 0; l<4; l++){
             int x = i + row[l];
             int y = j + col[l];
@@ -30,7 +29,6 @@ public:
         
         for(int i = 0; i<m; i++){
             for(int j = 0; j<n; j++){
-                // vector<vector<int>> visited (m,vector<int>(n,0));
                 if(board[i][j] == word[0])
                 ans = ans || dfs(i,j,1,board,word,m,n);
                 if(ans)
