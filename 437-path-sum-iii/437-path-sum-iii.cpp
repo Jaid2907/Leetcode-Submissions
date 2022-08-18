@@ -12,7 +12,7 @@
 class Solution {
 public:
     int cnt = 0;
-    void preorder (TreeNode* root, int target,long long int sum, bool picked){
+    void preorder (TreeNode* root, int target,long long int sum,unordered_map<long long int,int>& mp){
         
        
         if(!root){
@@ -20,27 +20,25 @@ public:
         }
 
         sum += root->val;
-        if(sum == target){
-            cnt++;   
+        if(mp.find(sum - target) != mp.end()){
+            cnt += mp[sum - target];
         }
-                
-        preorder(root->left,target,sum,true);
-        preorder(root->right,target,sum,true);
+        
+        
+        mp[sum]++;
+        preorder(root->left,target,sum,mp);
+        preorder(root->right,target,sum,mp);
+        
+        mp[sum]--;
         sum -= root->val;
-        
-        
-        if(!picked){
-        preorder(root->left,target,sum,picked);
-        preorder(root->right,target,sum,picked);    
-        }
-        
-        
         
     }
     int pathSum(TreeNode* root, int targetSum) {
         
+        unordered_map<long long int,int> mp;
+        mp[0] = 1;
         
-        preorder(root,targetSum,0,false);
+        preorder(root,targetSum,0,mp);
         return cnt;
     }
 };
