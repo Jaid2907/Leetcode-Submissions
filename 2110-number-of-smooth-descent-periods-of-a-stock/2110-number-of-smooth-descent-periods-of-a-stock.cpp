@@ -7,9 +7,8 @@ public:
         int i = 0;
         int j = 0;
         
-        while(i<n){
-            
-            while(true){
+       
+            while(i<n){
                 ans += i-j+1;
                 if(i+1 < n && nums[i] - nums[i+1]  == 1){
                     i++;
@@ -17,12 +16,12 @@ public:
                 else{
                     i++;
                     j = i;
-                    break;
+                   
                 }
                 
             }
         
-        }
+        
         
         return ans;
     }
