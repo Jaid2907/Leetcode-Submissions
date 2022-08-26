@@ -10,8 +10,8 @@ struct compare{
 
 class FoodRatings {
 public:
-    map<string, set<pair<int,string>> > cuisine_map;
-    map <string, pair<string,int>> food_map;
+    unordered_map<string, set<pair<int,string>> > cuisine_map;
+    unordered_map <string, pair<string,int>> food_map;
     
     FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
         int n = foods.size();
