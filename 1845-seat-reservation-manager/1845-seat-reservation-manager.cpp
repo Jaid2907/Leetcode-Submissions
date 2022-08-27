@@ -1,17 +1,22 @@
 class SeatManager {
 public:
     set<int> s;
+    int count = 1;
     SeatManager(int n) {
-        for(int i = 1; i<=n; i++)
-            s.insert(i);
+        
     }
     
     int reserve() {
         
-        int num = *s.begin();
-        s.erase(num);
-        
-        return num;
+        if(s.empty()){
+            return count++;
+        }
+        else{
+           int num = *s.begin();
+            s.erase(num);
+            return num;
+        }
+            
     }
     
     void unreserve(int seatNumber) {
