@@ -19,9 +19,9 @@ public:
         }
         sort(changed.begin(), changed.end(), compare);
         
-        for(auto it: changed){
-            cout<<it<<" ";
-        }
+        // for(auto it: changed){
+        //     cout<<it<<" ";
+        // }
         for(int i = 0; i<n; i++){
             if(mp.find(changed[i]) != mp.end()){
                 if(mp.find(2*changed[i]) == mp.end()){
