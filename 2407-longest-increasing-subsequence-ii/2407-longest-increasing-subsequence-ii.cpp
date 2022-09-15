@@ -5,9 +5,7 @@ class segTree{
  
     vector<int> seg;
     segTree(int n){
-        int x = 1;
-        while(x <= 200000) x *= 2;
-        seg.resize(2 * x, 0);
+        seg.resize(4*n, 0);
     }
     void update(int ind, int low, int high, int i, int val)
   {
