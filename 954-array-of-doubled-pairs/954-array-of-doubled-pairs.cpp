@@ -25,22 +25,23 @@ public:
         for(int i = 0; i<n; i++){
             if(mp.find(changed[i]) != mp.end()){
                 if(mp.find(2*changed[i]) == mp.end()){
-                    f = 1;
-                    break;
+                    return false;
                 }
                 
                
-                mp[changed[i]]--;
-                if(mp[changed[i]] == 0)
+                if(mp[2*changed[i]] >= mp[changed[i]]){
+                    mp[2*changed[i]] -= mp[changed[i]];
                     mp.erase(changed[i]);
-                
-                mp[2*changed[i]]--;
-                if(mp[2*changed[i]] == 0)
-                    mp.erase(2*changed[i]);
+                    if(mp[2*changed[i]] == 0)
+                        mp.erase(2*changed[i]);
+                }
+                else
+                    return false;
+               
             }
         }
         
-        if(mp.empty() && f == 0)
+        if(mp.empty())
             return true;
         return false;
     
