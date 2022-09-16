@@ -16,6 +16,7 @@ public:
                 min_pos = i;
             }
         }
+        
         if(min_pos > max_pos)
             swap(min_pos,max_pos);
         
