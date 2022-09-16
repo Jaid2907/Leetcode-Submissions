@@ -20,7 +20,23 @@ public:
         int n = nums.size();
         int m = multipliers.size();
         
-        vector<vector<int>> dp(m,vector<int>(m,1e9+7));
-        return helper(0,0,m,n,nums,multipliers,dp);
+        vector<vector<int>> dp(m+1,vector<int>(m+1,0));
+        
+        for(int i = m-1; i>=0; i--){//op
+            
+            for(int j = m-1; j>=0; j--){//left
+             
+                if(i>=j){
+                    int right = n-1+j-i;
+                    int a = nums[j]*multipliers[i] + dp[i+1][j+1];
+                    int b = nums[right]*multipliers[i] + dp[i+1][j];
+                    
+                    dp[i][j] = max(a,b);
+                }
+            }
+        }
+        
+        return dp[0][0];
+       
     }
 };
