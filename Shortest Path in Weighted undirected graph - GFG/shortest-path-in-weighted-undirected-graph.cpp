@@ -15,8 +15,9 @@ class Solution {
     vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
         // Code here
         vector<int> ans;
-        vector<pair<int,vector<int>>> dist(n+1,{INT_MAX,{}});
-        dist[1].first = 0;
+        vector<int> dist(n+1,INT_MAX);
+        vector<int> parent(n+1,-1);
+        dist[1] = 0;
         vector<pair<int,int>> adj[n+1];
         
         for(int i = 0; i<m; i++){
@@ -35,22 +36,26 @@ class Solution {
             
             for(auto it: adj[node.first]){
                 
-                if(dist[node.first].first + it.second < dist[it.first].first){
+                if(dist[node.first] + it.second < dist[it.first]){
                     
-                    dist[it.first].first = dist[node.first].first + it.second;
-                    
-                    vector<int> temp = dist[node.first].second;
-                    temp.push_back(node.first);
-                    dist[it.first].second = temp;
-                    pq.push({it.first, dist[it.first].first});
+                    dist[it.first] = dist[node.first] + it.second;
+                    pq.push({it.first, dist[it.first]});
+                    parent[it.first] = node.first;
                 }
             }
         }
         
-        if(dist[n].first == INT_MAX)
+        if(dist[n] == INT_MAX)
             return {-1};
-        dist[n].second.push_back(n);
-        return dist[n].second;
+        int j = n;
+        
+        while(parent[j] != -1){
+            ans.push_back(j);
+            j = parent[j];
+        }
+        ans.push_back(1);
+        reverse(ans.begin(), ans.end());
+        return ans;
     }
 };
 
