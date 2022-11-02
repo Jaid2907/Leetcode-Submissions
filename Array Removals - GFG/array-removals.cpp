@@ -12,16 +12,16 @@ class Solution{
     public:
     int removals(vector<int>& nums, int k){
         //Code here
-        int n = nums.size();
-        int ans = INT_MAX;
+        long long int n = nums.size();
+        long long int ans = INT_MAX;
         sort(nums.begin(), nums.end());
-        for(int i = n-1; i>=0; i--){
-            int j = 0;
+        
+        for(int i = 0; i<n; i++){
             
-            while(j < i && nums[i] - nums[j] > k)
-                j++;
+            auto ub = upper_bound(nums.begin(), nums.end(), nums[i] + k) - (nums.begin() + i);
             
-            ans = min(ans, j + n-i - 1);
+            ans = min(ans, n - ub);
+            
         }
         
         return ans;
