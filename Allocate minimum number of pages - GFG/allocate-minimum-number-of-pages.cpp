@@ -49,7 +49,7 @@ class Solution
             s+=nums[i];
         }
         
-        long long int low = mini, high = s, mid;
+        long long int low = 0, high = s, mid;
         
         while(high - low > 1){
             mid = low + (high - low)/2;
