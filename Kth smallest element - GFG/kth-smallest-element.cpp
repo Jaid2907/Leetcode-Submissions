@@ -19,24 +19,37 @@ class Solution{
     // l : starting index of the array i.e 0
     // r : ending index of the array i.e size-1
     // k : find kth smallest element and return using this function
+    int partition(int low, int high, int arr[]){
+        int pivot = arr[low];
+        int i = low, j = high;
+        
+        while(i<j){
+            while(arr[i] <= pivot)
+                i++;
+            while(arr[j] > pivot)
+                j--;
+            if(i<j)
+                swap(arr[i], arr[j]);
+        }
+        swap(arr[low], arr[j]);
+        return j;
+    }
+    int helper (int low, int high, int arr[],int k){
+        if(low > high)
+            return INT_MAX;
+        
+        int ind = partition(low,high,arr);
+        
+        if(ind == k-1)
+            return arr[ind];
+        else if(ind > k-1)
+            return helper(low, ind-1,arr,k);
+        else
+            return helper(ind+1,high,arr,k);
+    }
     int kthSmallest(int arr[], int l, int r, int k) {
         //code here
-        priority_queue<int, vector<int>, compare> pq;
-        
-        for(int i = l; i<=r; i++){
-            if(pq.size() < k){
-                pq.push(arr[i]);
-            }
-            else{
-                if(arr[i] < pq.top()){
-                    pq.pop();
-                    pq.push(arr[i]);
-                }
-                
-            }
-        }
-        
-        return pq.top();
+       return helper(l,r,arr,k);
         
     }
 };
