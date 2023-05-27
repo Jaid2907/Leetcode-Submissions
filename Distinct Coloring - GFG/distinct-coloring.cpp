@@ -9,24 +9,18 @@ using namespace std;
 
 class Solution{   
 public:
-    long long int distinctColoring(int N, int r[], int g[], int b[]){
+    long long int distinctColoring(int n, int r[], int g[], int b[]){
         // code here 
-        vector<vector<long long int>> dp(3, vector<long long int>(N,0));
-        
-        dp[0][0] = r[0];
-        dp[1][0] = g[0];
-        dp[2][0] = b[0];
+        vector<vector<long long int>> dp(n+1, vector<long long int>(3,0));
         
         
-        for(int i = 1; i<N; i++){
-            dp[0][i] = r[i] + min(dp[1][i-1], dp[2][i-1]);
-            
-            dp[1][i] = g[i] + min(dp[0][i-1], dp[2][i-1]);
-            
-            dp[2][i] = b[i]  + min(dp[0][i-1],dp[1][i-1]);
+        for(int i = 1; i<=n; i++){
+            dp[i][0] = r[i-1] + min(dp[i-1][1], dp[i-1][2]);
+            dp[i][1] = g[i-1] + min(dp[i-1][0], dp[i-1][2]);
+            dp[i][2] = b[i-1] + min(dp[i-1][0], dp[i-1][1]);
         }
         
-        return min({dp[0][N-1],dp[1][N-1], dp[2][N-1]});
+        return min({dp[n][0], dp[n][1], dp[n][2]});
     }
 };
 
