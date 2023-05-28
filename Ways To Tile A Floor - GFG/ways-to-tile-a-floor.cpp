@@ -7,17 +7,24 @@ class Solution {
   public:
     long long numberOfWays(long long n) {
         //code here
-        vector<long long int> dp(n+1,0);
         
-        dp[1] = 1;
-        dp[2] = 2;
+        if(n == 1)
+            return 1;
+        
+        int prev = 2;
+        int secondPrev = 1;
+        
+        
         int mod = 1e9+7;
         
         for(int i = 3; i<=n; i++){
-            dp[i] = (dp[i-1] + dp[i-2])%mod;
+            int curr = (prev + secondPrev)%mod;
+            secondPrev = prev;
+            prev = curr;
+            
         }
         
-        return dp[n];
+        return prev;
         
         
     }
