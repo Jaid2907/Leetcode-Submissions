@@ -17,7 +17,7 @@ class Solution{
         
         for(int i = 1; i<n; i++){
             int maxi = price[i];
-            for(int j = 0; j<i; j++){
+            for(int j = 0; j<=i/2; j++){
                 maxi = max(maxi, dp[j] + dp[i-j-1]);
             }
             dp[i] = maxi;
