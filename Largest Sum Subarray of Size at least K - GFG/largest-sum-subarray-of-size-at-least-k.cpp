@@ -28,31 +28,27 @@ int main() {
 
 long long int maxSumWithK(long long int a[], long long int n, long long int k) 
 {
-    vector<long long int> prefix(n+1,0);
+    
     long long int sum = 0;
     
-    for(int i = 0; i<n; i++){
-        sum += a[i];
-        prefix[i+1] = sum;
-    }
+   
     
     vector<int> dp(n,0);
+    long long int r_sum = 0;
     sum = 0;
     long long int ans = INT_MIN;
     
     for(int i = 0; i<n; i++){
         sum += a[i];
+        r_sum += a[i];
         if(sum < 0)
             sum = 0;
         dp[i] = sum;
         
         if(i-k >= -1){
-            long long int temp = prefix[i+1];
-            temp -= i-k+1 >= 0 ? prefix[i-k+1] : 0;
-            // if(i == n-1)    
-            //     cout<<temp<<endl;
+            r_sum -= i-k >=0 ? a[i-k] : 0;
+            long long int temp = r_sum;
             temp += i-k >=0? dp[i-k] : 0;
-            
             ans = max(ans,temp);
         }
         
