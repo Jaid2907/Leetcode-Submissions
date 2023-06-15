@@ -10,20 +10,21 @@ class Solution
         int closing (string s, int pos)
         {
         	//code here.
-        	stack<char> st;
+        	int open = 0;
+        	int open_store;
         	int  n = s.size();
         	
         	for(int i = 0; i<n; i++){
+        	    if(s[i] == '['){
         	    if(i == pos){
-        	        st.push('*');
-        	    }
-        	    else if(s[i] == '['){
-        	        st.push(s[i]);
+        	           open_store = open;
+        	        }
+        	        open++;
         	    }
         	    else if(s[i] == ']'){
-        	        if(st.top() == '*')
+        	        open--;
+        	        if(open == open_store)
         	            return i;
-        	       st.pop();
         	    }
         	}
         	
