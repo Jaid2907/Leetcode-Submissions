@@ -13,7 +13,7 @@ class Solution{
     unordered_map<int,int> mp;
     void insert(queue<int> &q, int k){
         // Your code here
-        mp[k]++;
+        q.push(k);
         
     }
     
@@ -21,7 +21,21 @@ class Solution{
     // return the frequency of k
     int findFrequency(queue<int> &q, int k){
         // Your code here
-        return mp[k];
+        vector<int> temp;
+        int cnt = 0;
+        
+        while(!q.empty()){
+            if(q.front() == k)
+                cnt++;
+            temp.push_back(q.front());
+            q.pop();
+        }
+        
+       for(int i = 0; i<temp.size(); i++){
+           q.push(temp[i]);
+       }
+       
+        return cnt;
     }
     
 };
