@@ -10,54 +10,57 @@ class Solution {
 public:
     vector<vector<string>> findSequences(string beginWord, string endWord, vector<string>& wordList) {
         // code here
-        queue<pair<string, vector<string>>> q;
-        vector<vector<string>> ans;
-        q.push({beginWord, {beginWord}});
-        unordered_map<string, int> mp;
-        for(auto it: wordList){
-            mp[it]++;
-        }
+        map<string,int> mp;
+        for(int i = 0; i<wordList.size(); i++)
+            mp[wordList[i]]++;
         
+        unordered_set<string> used;
+        queue<vector<string>> q;
+        q.push({beginWord});
+        mp.erase(beginWord);
+        
+        vector<vector<string>> ans;
         
         while(!q.empty()){
+            
             int size = q.size();
-             vector<string> del;
             
             while(size--){
-                auto it = q.front();
+                auto curr_list = q.front();
                 q.pop();
-                string word = it.first;
-                vector<string> vec = it.second;
-               
                 
-                for(int i = 0; i<word.size(); i++){
-                    string temp = word;
-                    for(int j = 0; j<26; j++){
-                        temp[i] = j+97;
-                        if(temp != word && mp.find(temp) != mp.end()){
-                            
-                            del.push_back(temp);
-                            vec.push_back(temp);
-                            if(temp == endWord){
-                                ans.push_back(vec);
-                            }
-                            else{
-                            q.push({temp,vec});
-                            }
-                            vec.pop_back();
-                        }
-                        
+                string last = curr_list.back();
+                
+                for(int i = 0; i<last.size(); i++){
+                    char original = last[i];
                     
+                    for(int j = 97; j<122; j++){
+                        if(j == original)   
+                            continue;
+                        last[i] = j;
+                        if(mp.find(last) != mp.end()){
+                            curr_list.push_back(last);
+                            q.push({curr_list});
+                            used.insert(last);
+                            if(last == endWord){
+                                ans.push_back(curr_list);
+                            }
+                            curr_list.pop_back();
+                        }
                     }
+                    
+                    last[i] = original;
                 }
             }
             
-            for(auto it: del){
+            for(auto &it: used){
                 mp.erase(it);
             }
             
         }
+        
         return ans;
+        
     }
 };
 
