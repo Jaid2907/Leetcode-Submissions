@@ -3,60 +3,61 @@
 using namespace std;
 
 // } Driver Code Ends
-
-class compare{
-  public:
-  bool operator()(pair<int,int>& a, pair<int,int>& b){
-      return a.second > b.second;
-  }
-};
 class Solution {
   public:
     vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
         // Code here
-        vector<int> ans;
-        vector<int> dist(n+1,INT_MAX);
         vector<int> parent(n+1,-1);
-        dist[1] = 0;
         vector<pair<int,int>> adj[n+1];
         
-        for(int i = 0; i<m; i++){
-            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
-            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
+        for(int i = 0; i<edges.size(); i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int wt = edges[i][2];
+            
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
         }
         
+        set<pair<int,int>> s;
+        vector<int> dist(n+1,1e9);
+        dist[1] = 0;
+        s.insert({0,1});
         
-        priority_queue<pair<int,int>, vector<pair<int,int>>, compare> pq;
-        pq.push({1,0});
-        
-        while(!pq.empty()){
+        while(!s.empty()){
             
-            auto node = pq.top();
-            pq.pop();
+            auto it = *s.begin();
+            int node = it.second;
+            int dis = it.first;
+            s.erase(s.begin());
             
-            for(auto it: adj[node.first]){
+            for(auto &it: adj[node]){
                 
-                if(dist[node.first] + it.second < dist[it.first]){
-                    
-                    dist[it.first] = dist[node.first] + it.second;
-                    pq.push({it.first, dist[it.first]});
-                    parent[it.first] = node.first;
+                if(it.second + dis < dist[it.first]){
+                    parent[it.first] = node;
+                    s.erase({dist[it.first],it.first});
+                    dist[it.first] = it.second + dis;
+                    s.insert({dist[it.first],it.first});
                 }
             }
         }
         
-        if(dist[n] == INT_MAX)
-            return {-1};
-        int j = n;
-        
-        while(parent[j] != -1){
-            ans.push_back(j);
-            j = parent[j];
+        vector<int> ans;
+        while(parent[n] != -1){
+            ans.push_back(n);
+            n = parent[n];
         }
+        
+        if(ans.empty()){
+            ans.push_back(-1);
+            return ans;
+        }
+        
         ans.push_back(1);
         reverse(ans.begin(), ans.end());
         return ans;
     }
+    
 };
 
 //{ Driver Code Starts.
