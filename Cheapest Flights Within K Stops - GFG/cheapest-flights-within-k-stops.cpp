@@ -3,46 +3,41 @@
 using namespace std;
 
 // } Driver Code Ends
-
-class compare{
-  public:
-  bool operator()(vector<int>& a, vector<int>& b){
-      return a[0] > b[0];
-  }
-};
 class Solution {
   public:
-    int CheapestFLight(int n, vector<vector<int>>& flights, int src, int dst, int k)  {
+    int CheapestFLight(int n, vector<vector<int>>& flights, int src, int dst, int K)  {
         // Code here
         vector<pair<int,int>> adj[n];
-        
-        for(int i = 0; i<flights.size(); i++){
-            adj[flights[i][0]].push_back({flights[i][1],flights[i][2]});
+        for(auto &it: flights){
+            int u = it[0];
+            int v = it[1];
+            int wt = it[2];
+            adj[u].push_back({v,wt});
         }
         
-        priority_queue<vector<int>, vector<vector<int>>, compare> pq;
-        pq.push({0,src,0});
-        vector<int> dist(n,INT_MAX);
+        queue<vector<int>> q;
+        //{src,dist,stops}
+        q.push({src,0,0});
+        vector<int> dist(n,1e9);
         dist[src] = 0;
         
-        while(!pq.empty()){
-            auto node = pq.top();
-            pq.pop();
-            int u = node[1];
-            int wt = node[2];
-            int curr_k = node[0];
-            if(curr_k > k)
-            continue;
-            for(auto it: adj[u]){
+        while(!q.empty()){
+            auto node = q.front();
+            q.pop();
+            int curr = node[0];
+            int dis = node[1];
+            int stops = node[2];
+            
+            for(auto &it: adj[curr]){
                 
-                if(curr_k <=k && wt + it.second < dist[it.first]){
-                    dist[it.first] = wt + it.second;
-                    pq.push({curr_k+1,it.first,dist[it.first]});
+                if(it.second + dis < dist[it.first] && stops+1 <= K+1){
+                    dist[it.first] = it.second + dis;
+                    q.push({it.first,dist[it.first],stops+1});
                 }
             }
         }
         
-        return dist[dst] == INT_MAX ? -1 : dist[dst];
+        return dist[dst] == 1e9 ? -1 : dist[dst];
     }
 };
 
