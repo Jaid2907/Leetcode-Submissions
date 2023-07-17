@@ -1,42 +1,42 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution {
 	public:
-		string FirstNonRepeating(string A){
+		string FirstNonRepeating(string s){
 		    // Code here
-		    vector<int> freq(26,0);
-		    string str = "";
-		    int flag = 0;
-		    
+		    int n = s.size();
 		    queue<char> q;
+		    unordered_map<char,int> mp;
+		    string ans = "";
 		    
-		    for(int i=0;i<A.size(); i++){
+		    char curr = s[0];
+		    for(int i = 0; i<n; i++){
+		        mp[s[i]]++;
 		        
-		        freq[A[i]-97]++;
-		        if(freq[A[i]-97] == 1){
-		            q.push(A[i]);
-		        }
+		        if(mp[s[i]] == 1)
+		            q.push(s[i]);
 		        
-		        while(!q.empty() && freq[q.front()-97]>1){
+		        while(!q.empty() && mp[q.front()] != 1){
 		            q.pop();
-		        } 
-		        
-		        if(!q.empty()){
-		            str += q.front();
 		        }
-		        else
-		            str += "#";
+		        
+		        if(q.empty()){
+		            ans += '#';
+		        }
+		        else{
+		            ans += q.front();
+		        }
 		    }
 		    
-		
-        return str;
-	}
+		    return ans;
+		}
+
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main(){
 	int tc;
 	cin >> tc;
@@ -48,4 +48,5 @@ int main(){
 		cout << ans << "\n";
 	}
 	return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
