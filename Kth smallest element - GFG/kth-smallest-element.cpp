@@ -6,11 +6,10 @@ using namespace std;
 
 // } Driver Code Ends
 //User function template for C++
-
 class compare{
-  public:
+    public:
     bool operator()(int a, int b){
-        return a<b;
+        return a < b;
     }
 };
 class Solution{
@@ -19,37 +18,17 @@ class Solution{
     // l : starting index of the array i.e 0
     // r : ending index of the array i.e size-1
     // k : find kth smallest element and return using this function
-    int partition(int low, int high, int arr[]){
-        int pivot = arr[low];
-        int i = low, j = high;
-        
-        while(i<j){
-            while(arr[i] <= pivot)
-                i++;
-            while(arr[j] > pivot)
-                j--;
-            if(i<j)
-                swap(arr[i], arr[j]);
-        }
-        swap(arr[low], arr[j]);
-        return j;
-    }
-    int helper (int low, int high, int arr[],int k){
-        if(low > high)
-            return INT_MAX;
-        
-        int ind = partition(low,high,arr);
-        
-        if(ind == k-1)
-            return arr[ind];
-        else if(ind > k-1)
-            return helper(low, ind-1,arr,k);
-        else
-            return helper(ind+1,high,arr,k);
-    }
     int kthSmallest(int arr[], int l, int r, int k) {
         //code here
-       return helper(l,r,arr,k);
+        priority_queue<int,vector<int>, compare> pq;
+        
+        for(int i = l; i<=r; i++){
+            pq.push(arr[i]);
+            if(pq.size() > k)
+                pq.pop();
+        }
+        
+        return pq.top();
         
     }
 };
