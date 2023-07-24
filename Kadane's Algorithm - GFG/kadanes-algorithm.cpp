@@ -1,9 +1,9 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution{
     public:
     // arr: input array
@@ -12,23 +12,22 @@ class Solution{
     long long maxSubarraySum(int arr[], int n){
         
         // Your code here
-        int max_sum =  INT_MIN;
-        int curr_sum = 0;
+        long long int sum = 0, maxi = INT_MIN;
         
-        for(int i=0; i<n; i++){
+        for(int i = 0; i<n; i++){
+            sum += arr[i];
             
-            curr_sum += arr[i];
-            max_sum = max(max_sum,curr_sum);
-            if(curr_sum < 0)
-                curr_sum = 0;
+            maxi = max(maxi, sum);
+            if(sum < 0)
+                sum = 0;
         }
         
-        return max_sum;
+        return maxi;
         
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main()
 {
@@ -50,4 +49,5 @@ int main()
         cout << ob.maxSubarraySum(a, n) << endl;
     }
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
