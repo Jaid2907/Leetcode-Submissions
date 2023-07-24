@@ -14,27 +14,25 @@ class Solution{
     {
       //Your code here
       unordered_map<int,int> mp;
-      int ans = 0;
       for(int i = 0; i<n; i++)
         mp[arr[i]]++;
         
-      for(int i = 0; i<n; i++){
-          if(mp.find(arr[i]-1) != mp.end())
-            continue;
-            
-            int curr = arr[i];
-            int cnt = 0;
-            
-            while(mp.find(curr) != mp.end()){
-                cnt++;
-                curr++;
+        int ans = 0;
+        for(int i = 0; i<n; i++){
+            if(mp.find(arr[i]-1) == mp.end()){
+                int cnt = 0;
+                int curr = arr[i];
+                
+                while(mp.find(curr) != mp.end()){
+                    cnt++;
+                    curr++;
+                }
+                
+                ans = max(ans, cnt);
             }
-            
-            ans = max(ans, cnt);
-      }
-      
-      return ans;
-      
+        }
+        
+        return ans;
     }
 };
 
