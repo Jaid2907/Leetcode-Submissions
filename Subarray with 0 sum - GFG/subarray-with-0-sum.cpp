@@ -11,24 +11,21 @@ class Solution{
     public:
     //Complete this function
     //Function to check whether there is a subarray present with 0-sum or not.
-    bool subArrayExists(int nums[], int n)
+    bool subArrayExists(int arr[], int n)
     {
         //Your code here
         unordered_map<int,int> mp;
-        mp[0] = -1;
-        int s = 0;
+        int sum = 0;
         
         for(int i = 0; i<n; i++){
-            s += nums[i];
-            if(mp.find(s) != mp.end()){
+            sum += arr[i];
+            if(mp.find(sum) != mp.end())
                 return true;
-            }
-            
-            mp[s]++;
-            
+            mp[sum]++;
         }
         
-        return false;
+        return mp[0];
+        
         
     }
 };
