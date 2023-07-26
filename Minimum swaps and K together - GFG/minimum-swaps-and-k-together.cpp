@@ -9,34 +9,28 @@ using namespace std;
 
 // } Driver Code Ends
 
-
 class Solution
 {
 public:
     int minSwap(int arr[], int n, int k) {
-        int ans = INT_MAX;
-        int c = 0;
-        for(int i = 0; i<n; i++){
+        // Complet the function
+        int cnt = 0, curr_cnt = 0;
+        for(int i = 0; i<n; i++)
             if(arr[i] <= k)
-                c++;
-        }
-        int curr = 0;
-        for(int i = 0; i<c; i++){
-            if(arr[i] <= k){
-                curr++;
-            }
-        }
+                cnt++;
         
-        ans = min(ans, c-curr);
-        
-        for(int i = c; i<n; i++){
-            
-            if(arr[i-c] <= k )
-                curr--;
-            
+        for(int i = 0; i<cnt; i++)
             if(arr[i] <= k)
-                curr++;
-            ans = min(ans, c-curr);
+                curr_cnt++;
+        int ans = cnt-curr_cnt;
+        
+        for(int i = cnt; i<n; i++){
+            
+            if(arr[i-cnt] <= k)
+                curr_cnt--;
+            if(arr[i] <= k)
+                curr_cnt++;
+            ans = min(ans, cnt-curr_cnt);
         }
         
         return ans;
