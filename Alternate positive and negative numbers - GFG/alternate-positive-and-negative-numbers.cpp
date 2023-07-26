@@ -8,34 +8,35 @@ using namespace std;
 class Solution{
 public:
 
-	void rearrange(int a[], int n) {
+	void rearrange(int arr[], int n) {
 	    // code here
 	    vector<int> pos, neg;
+	    
 	    for(int i = 0; i<n; i++){
-	        if(a[i]>=0)
-	            pos.push_back(a[i]);
-	        else
-	            neg.push_back(a[i]);
+	        if(arr[i]  >= 0)
+	            pos.push_back(arr[i]);
+	       else
+	            neg.push_back(arr[i]);
 	    }
 	    
 	    int i = 0, j = 0, k = 0;
+	    int f = 0;
 	    
-	    while(i<n){
-	        if(i%2 == 0){
-	            if(j<pos.size())
-	                a[i++] = pos[j++];
-	            else
-                    a[i++] = neg[k++];	            
+	    while(i<pos.size() && j<neg.size()){
+	        if(f == 0 ){
+	            arr[k++] = pos[i++];
+	            f = !f;
 	        }
 	        else{
-	            if(k<neg.size())
-	                a[i++] = neg[k++];
-	            else
-	                a[i++] = pos[j++];
+	            arr[k++] = neg[j++];
+	            f = !f;
 	        }
 	    }
 	    
-	    
+	    while(i<pos.size())
+	        arr[k++] = pos[i++];
+	    while(j<neg.size())
+	        arr[k++] = neg[j++];
 	    
 	    
 	}
