@@ -4,35 +4,41 @@ using namespace std;
 
 
 // } Driver Code Ends
+
+class compare{
+    public:
+    bool operator()(int a, int b){
+        return a > b;
+    }
+};
 class Solution
 {
     public:
     //Function to return the sorted array.
     vector <int> nearlySorted(int arr[], int num, int k){
-        // Your code here
-        set<int> s;
+        // Your code herei
         int n = num;
-        vector<int> ans;
+        vector<int> ans(n);
+        priority_queue<int,vector<int>, compare> pq;
+        k++;
+        for(int i = 0; i<k; i++)
+            pq.push(arr[i]);
         
-        for(int i = 0; i<=k; i++){
-            s.insert(arr[i]);
-        }
-        ans.push_back(*s.begin());
-        s.erase(s.begin());
-        for(int i = k+1; i<n; i++){
-            s.insert(arr[i]);
-            auto top = *s.begin();
-            s.erase(s.begin());
-            ans.push_back(top);
-        }
+        int j = 0;
         
-        while(!s.empty()){
-            ans.push_back(*s.begin());
-            s.erase(s.begin());
+        for(int i = k; i<n; i++){
+            auto top = pq.top();
+            pq.pop();
+            ans[j++] = top;
+            pq.push(arr[i]);
+        }
+        while(!pq.empty()){
+            auto top = pq.top();
+            pq.pop();
+            ans[j++] = top;
         }
         
         return ans;
-        
     }
 };
 
