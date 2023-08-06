@@ -7,51 +7,47 @@ using namespace std;
 
 // } Driver Code Ends
 //User function template for C++
-int check(int mid, vector<vector<int>>& grid){
-    int m = grid.size();
-    int n = grid[0].size();
-    int cnt = 0;
 
-    for(int i = 0; i<m; i++){
-        auto it = upper_bound(grid[i].begin(), grid[i].end(),mid);
-        if(it == grid[i].begin())
-            continue;
-        it--;
-        cnt += (it-grid[i].begin()+1);
-    }
-
-    return cnt;
-}
 class Solution{   
 public:
-    int median(vector<vector<int>> &matrix, int R, int C){
-        // code here      
-        int low = 1 , high = 1e5;
-        int m = matrix.size();
-        int n = matrix[0].size();
-        int k = m*n/2+1;
-        int ans = -1;
-    
-        while(low <= high){
-            int mid = low + (high-low)/2;
-            int cnt = check(mid,matrix);
-    
-            if(cnt >= k){
-                ans = mid;
+    int check(vector<vector<int>>& mat, int r, int c, int mid){
+        int cnt = 0;
+        
+        for(int i = 0; i<r; i++){
+            auto it = upper_bound(mat[i].begin(), mat[i].end(), mid);
+            if(it != mat[i].begin()){
+                it--;
+                cnt += (it-mat[i].begin())+1;
+                
             }
-    
-            if(cnt >= k ){
-                high = mid-1;
+            
+        }
+        
+        return cnt;
+    }
+    int median(vector<vector<int>> &matrix, int r, int c){
+        // code here      
+        int low = 1, high = 2000;
+        int desired = (r*c+1)/2;
+        int ans = -1;
+        
+        while(low <= high){
+            
+            int mid = low + (high-low)/2;
+            int cnt = check(matrix,r,c,mid);
+            
+            if(cnt >= desired){
+                ans = mid;
+                high = mid - 1;
             }
             else{
                 low = mid + 1;
             }
         }
-    
+        
         return ans;
-
+        
     }
-    
 };
 
 
